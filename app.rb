@@ -12,7 +12,7 @@ class App
     '4' => :create_book,
     '5' => :create_rental,
     '6' => :list_all_rentals,
-    '7' => :exit_app,
+    '7' => :exit_app
   }.freeze
 
   def initialize
@@ -72,9 +72,9 @@ class App
     puts 'Parent permission? [Y/N]: '
     parent_permission = gets.chomp.downcase
     if parent_permission == 'y'
-        parent_permission = true
+      parent_permission = true
     else
-        false
+      false
     end
 
     if name.strip.empty? || age.to_s.strip.empty?
@@ -105,7 +105,7 @@ class App
     else
       book = Book.new(title, author)
       @books << book
-      puts "Book created successfully."
+      puts 'Book created successfully.'
     end
   end
 
@@ -125,7 +125,7 @@ class App
       puts 'Enter the date [yyyy-mm-dd]: '
       date = gets.chomp.to_s
 
-      if person_to_rent 
+      if person_to_rent
         rental = Rental.new(date, @books[book_number], person_to_rent)
         @rentals << rental
         puts 'Book rented successfully.'
@@ -148,7 +148,7 @@ class App
       else
         puts 'Here is your record:'
         puts ''
-        rental.each_with_index do |record, index|
+        rental.each_with_index do |record, _index|
           puts "Date: #{record.date}, Book: #{record.book.title} by #{record.book.author}"
         end
       end
