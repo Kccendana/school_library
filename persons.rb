@@ -64,4 +64,8 @@ class Persons < ActionInterface
     @people << teacher
     puts "Teacher created successfully. ID is #{teacher.id}"
   end
+
+  def find(&block)
+    @books.find(&block)
+  end
 end

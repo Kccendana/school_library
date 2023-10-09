@@ -33,4 +33,8 @@ class Books < ActionInterface
       puts 'Book created successfully.'
     end
   end
+
+  def find(&block)
+    @books.find(&block)
+  end
 end
