@@ -49,6 +49,9 @@ class App
   def create_person
     puts 'Please enter [1] to create a student or [2] to create a teacher. [Input the number]: '
     choice = gets.chomp
+    puts 'Invalid choice. Please try again' unless %w[1 2].include?(choice)
+    return unless %w[1 2].include?(choice)
+
     puts 'Name: '
     name = gets.chomp
     puts 'Age: '
@@ -57,12 +60,8 @@ class App
     case choice
     when '1'
       create_student(name, age)
-
     when '2'
       create_teacher(name, age)
-
-    else
-      puts 'Invalid choice. Please try again'
     end
   end
 
