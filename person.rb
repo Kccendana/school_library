@@ -14,10 +14,6 @@ class Person
     of_age? || @parent_permission
   end
 
-  def add_rental(date, book)
-    @rentals.push(Rental.new(date, self, book)) unless @rentals.include?(Rental.new(date, self, book))
-  end
-
   private
 
   def of_age?
