@@ -76,6 +76,13 @@ The School Library Management App aims to simplify the administration of books a
 - Twitter: [@kc_telyn](https://twitter.com/kc_telyn)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/katherinecendana/)
 
+👤 **Christopher Uduekwe**
+
+- GitHub: [@githubhandle](https://github.com/chudisoft)
+- Twitter: [@twitterhandle](https://twitter.com/chrisuduekwe)
+- LinkedIn: [LinkedIn](https://linkedin.com/in/chudisoft)
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔭 Future Features <a name="future-features"></a>
