@@ -1,10 +1,12 @@
 require_relative 'app'
 
-puts 'Welcome to our School Library App!'
-
-def main
-  app = App.new
-  app.start
+class Main
+  def run
+    puts 'Welcome to our School Library App!'
+    app = App.new
+    app.start
+  end
 end
 
-main
+main = Main.new
+main.run
