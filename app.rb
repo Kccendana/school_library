@@ -1,8 +1,6 @@
-require_relative 'book'
-require_relative 'person'
-require_relative 'rental'
-require_relative 'student'
-require_relative 'teacher'
+require_relative 'books'
+require_relative 'persons'
+require_relative 'rentals'
 
 class App
   OPTIONS = {
@@ -16,9 +14,9 @@ class App
   }.freeze
 
   def initialize
-    @books = []
-    @rentals = []
-    @people = []
+    @books = Books.new([])
+    @rentals = Rentals.new([])
+    @people = Persons.new([])
   end
 
   def start
@@ -26,133 +24,27 @@ class App
   end
 
   def book_lists
-    if @books.empty?
-      puts 'Book list is empty. Try again'
-    else
-      puts "There are #{@books.length} books in the list:"
-      @books.each_with_index do |book, index|
-        puts "#{index}) #{book.title} by #{book.author}"
-      end
-    end
+    @books.list_all
   end
 
   def people_lists
-    if @people.empty?
-      puts 'People list is empty. Please try again and add people.'
-    else
-      @people.each_with_index do |person, index|
-        puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
-      end
-    end
+    @people.list_all
   end
 
   def create_person
-    puts 'Please enter [1] to create a student or [2] to create a teacher. [Input the number]: '
-    choice = gets.chomp
-    puts 'Name: '
-    name = gets.chomp
-    puts 'Age: '
-    age = gets.chomp.to_i
-
-    case choice
-    when '1'
-      create_student(name, age)
-
-    when '2'
-      create_teacher(name, age)
-
-    else
-      puts 'Invalid choice. Please try again'
-    end
-  end
-
-  def create_student(name, age)
-    puts 'Grade: '
-    grade = gets.chomp
-    puts 'Parent permission? [Y/N]: '
-    parent_permission = gets.chomp.downcase
-    if parent_permission == 'y'
-      parent_permission = true
-    else
-      false
-    end
-
-    if name.strip.empty? || age.to_s.strip.empty?
-      puts 'You entered an empty name and age. Please try again'
-    else
-      student = Student.new(grade, age, name: name, parent_permission: parent_permission)
-      @people << student
-      puts "Student created successfully. ID is #{student.id}"
-    end
-  end
-
-  def create_teacher(name, age)
-    puts 'Specialization: '
-    specialization = gets.chomp
-    teacher = Teacher.new(age, specialization, name: name)
-    @people << teacher
-    puts "Teacher created successfully. ID is #{teacher.id}"
+    @people.create
   end
 
   def create_book
-    puts 'Title: '
-    title = gets.chomp
-    puts 'Author: '
-    author = gets.chomp
-
-    if title.strip.empty? || author.strip.empty?
-      puts 'Please enter the book title and author.'
-    else
-      book = Book.new(title, author)
-      @books << book
-      puts 'Book created successfully.'
-    end
+    @books.create
   end
 
   def create_rental
-    if @books.empty? || @people.empty?
-      puts 'Library is empty.'
-    else
-      puts 'Select the number of the book from the following list'
-      book_lists
-      book_number = gets.chomp.to_i
-      puts 'Select an ID from the following list'
-      people_lists
-      person_id = gets.chomp.to_i
-
-      person_to_rent = @people.find { |person| person.id == person_id }
-
-      puts 'Enter the date [yyyy-mm-dd]: '
-      date = gets.chomp.to_s
-
-      if person_to_rent
-        rental = Rental.new(date, @books[book_number], person_to_rent)
-        @rentals << rental
-        puts 'Book rented successfully.'
-      else
-        "Person with ID #{person_id} not found."
-      end
-    end
+    @rentals.create(@books, @people)
   end
 
   def list_all_rentals
-    if @rentals.empty?
-      puts 'No rentals at the moment.'
-    else
-      puts 'To view rentals, enter your ID: '
-      id = gets.chomp.to_i
-      rental = @rentals.select { |rent| rent.person.id == id }
-
-      if rental.empty?
-        puts 'No record for that ID.'
-      else
-        puts 'Here is your record:'
-        puts ''
-        rental.each_with_index do |record, _index|
-          puts "Date: #{record.date}, Book: #{record.book.title} by #{record.book.author}"
-        end
-      end
-    end
+    @rentals.list_all
   end
 
   def choose_option
