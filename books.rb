@@ -65,8 +65,8 @@ class Books < ActionInterface
     end
   end
 
-  def find(&block)
-    @books.find(&block)
+  def find(index)
+    @books[index]
   end
 
   def empty

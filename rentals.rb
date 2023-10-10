@@ -49,14 +49,18 @@ class Rentals < ActionInterface
       person_to_rent = people.find { |person| person.id == person_id }
       puts 'Enter the date [yyyy-mm-dd]: '
       date = gets.chomp.to_s
-      if person_to_rent
-        rental = Rental.new(date, books[book_number], person_to_rent)
-        @rentals << rental
-        save
-        puts 'Book rented successfully.'
-      else
-        "Person with ID #{person_id} not found."
-      end
+      rent_person(date, books, book_number, person_to_rent, person_id)
+    end
+  end
+
+  def rent_person(date, books, book_number, person_to_rent, person_id)
+    if person_to_rent
+      rental = Rental.new(date, books.find(book_number), person_to_rent)
+      @rentals << rental
+      save
+      puts 'Book rented successfully.'
+    else
+      "Person with ID #{person_id} not found."
     end
   end
 
