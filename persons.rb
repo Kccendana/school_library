@@ -68,7 +68,7 @@ class Persons < ActionInterface
   end
 
   def find(&block)
-    @books.find(&block)
+    @people.find(&block)
   end
 
   def empty
