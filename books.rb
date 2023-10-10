@@ -3,9 +3,35 @@ require_relative 'person'
 require_relative 'action_interface'
 
 class Books < ActionInterface
-  def initialize(books)
-    @books = books
+  def initialize()
+    @books = read_books_from_json_file
+    book_array.each do |book|
+      puts "Title: #{book.title}, Author: #{book.author}"
+    end
     super()
+  end
+
+  def read_books_from_json_file()
+    file_path = 'books.json'
+    books = []
+
+    begin
+      # Read the JSON file
+      json_data = File.read(file_path)
+
+      # Parse the JSON data into an array of hashes
+      book_hashes = JSON.parse(json_data)
+
+      # Create Book objects from each hash and add them to the array
+      book_hashes.each do |hash|
+        book = Book.new(hash['title'], hash['author'])
+        books << book
+      end
+    rescue StandardError => e
+      puts "An error occurred: #{e.message}"
+    end
+
+    books
   end
 
   def list_all
