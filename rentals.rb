@@ -5,8 +5,32 @@ require_relative 'action_interface'
 
 class Rentals < ActionInterface
   def initialize()
-    @rentals = rentals
+    @rentals = read_rentals_from_json_file
+    end
     super()
+  end
+
+  def read_rentals_from_json_file()
+    file_path = 'rentals.json'
+    rentals = []
+
+    begin
+      # Read the JSON file
+      json_data = File.read(file_path)
+
+      # Parse the JSON data into an array of hashes
+      rental_hashes = JSON.parse(json_data)
+
+      # Create Book objects from each hash and add them to the array
+      rental_hashes.each do |hash|
+        rental = Rental.new(hash['title'], hash['author'])
+        rentals << rental
+      end
+    rescue StandardError => e
+      puts "An error occurred: #{e.message}"
+    end
+
+    books
   end
 
   def create(books, people)

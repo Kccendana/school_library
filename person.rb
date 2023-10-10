@@ -14,6 +14,10 @@ class Person
     of_age? || @parent_permission
   end
 
+  def to_hash
+    {"class" => self.class, "age" => @age, "name" => @name, "parent_permission" => @parent_permission, "id": @id}
+  end
+
   private
 
   def of_age?

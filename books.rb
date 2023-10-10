@@ -1,11 +1,12 @@
 require_relative 'book'
 require_relative 'person'
 require_relative 'action_interface'
+require 'json'
 
 class Books < ActionInterface
   def initialize()
     @books = read_books_from_json_file
-    book_array.each do |book|
+    @books.each do |book|
       puts "Title: #{book.title}, Author: #{book.author}"
     end
     super()
@@ -34,6 +35,12 @@ class Books < ActionInterface
     books
   end
 
+  def save 
+    books_hashes = @books.map(&:to_hash)
+    books_json = JSON.pretty_generate(books_hashes)
+    File.write('books.json', books_json)
+  end
+
   def list_all
     if @books.empty?
       puts 'Book list is empty. Try again'
@@ -56,7 +63,7 @@ class Books < ActionInterface
     else
       book = Book.new(title, author)
       @books << book
-      book.save_book_to_file(title, author)
+      save
       puts 'Book created successfully.'
     end
   end

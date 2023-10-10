@@ -37,6 +37,12 @@ class Persons < ActionInterface
     end
   end
 
+  def save 
+    persons_hashes = @people.map(&:to_hash)
+    persons_json = JSON.pretty_generate(persons_hashes)
+    File.write('persons.json', persons_json)
+  end
+
   def create_student(name, age)
     puts 'Grade: '
     grade = gets.chomp
@@ -53,7 +59,7 @@ class Persons < ActionInterface
     else
       student = Student.new(grade, age, name: name, parent_permission: parent_permission)
       @people << student
-      student.save_student_to_file(grade, age, name, parent_permission)
+      save
       puts "Student created successfully. ID is #{student.id}"
     end
   end
@@ -63,7 +69,7 @@ class Persons < ActionInterface
     specialization = gets.chomp
     teacher = Teacher.new(age, specialization, name: name)
     @people << teacher
-    teacher.save_teacher_to_file(age, specialization, name)
+    save
     puts "Teacher created successfully. ID is #{teacher.id}"
   end
 
