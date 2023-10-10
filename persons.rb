@@ -70,4 +70,8 @@ class Persons < ActionInterface
   def find(&block)
     @books.find(&block)
   end
+
+  def empty
+    @people.empty?
+  end
 end

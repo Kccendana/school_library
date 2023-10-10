@@ -10,7 +10,7 @@ class Rentals < ActionInterface
   end
 
   def create(books, people)
-    if books.list_all.empty? || people.list_all.empty?
+    if books.empty? || people.empty?
       puts 'Library is empty.'
     else
       puts 'Select the number of the book from the following list'
@@ -54,5 +54,9 @@ class Rentals < ActionInterface
         end
       end
     end
+  end
+
+  def empty
+    @rentals.empty?
   end
 end

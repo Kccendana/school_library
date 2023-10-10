@@ -38,4 +38,8 @@ class Books < ActionInterface
   def find(&block)
     @books.find(&block)
   end
+
+  def empty
+    @books.empty?
+  end
 end
