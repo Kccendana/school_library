@@ -4,7 +4,7 @@ require_relative 'rental'
 require_relative 'action_interface'
 
 class Rentals < ActionInterface
-  def initialize(rentals)
+  def initialize()
     @rentals = rentals
     super()
   end
@@ -19,9 +19,7 @@ class Rentals < ActionInterface
       puts 'Select an ID from the following list'
       people.list_all
       person_id = gets.chomp.to_i
-
       person_to_rent = people.find { |person| person.id == person_id }
-
       puts 'Enter the date [yyyy-mm-dd]: '
       date = gets.chomp.to_s
 
