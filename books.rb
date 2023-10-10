@@ -6,9 +6,6 @@ require 'json'
 class Books < ActionInterface
   def initialize()
     @books = read_books_from_json_file
-    @books.each do |book|
-      puts "Title: #{book.title}, Author: #{book.author}"
-    end
     super()
   end
 
@@ -35,7 +32,7 @@ class Books < ActionInterface
     books
   end
 
-  def save 
+  def save
     books_hashes = @books.map(&:to_hash)
     books_json = JSON.pretty_generate(books_hashes)
     File.write('books.json', books_json)

@@ -11,11 +11,11 @@ class Rental
     @person = person
   end
 
-  def save_rental_to_file(date, book, person)
-    rental_json = {date: date, book: book, person: person}.to_json
-    open('rental.json', 'a') do | file |
-      file.puts rental_json
-    end
+  def to_hash
+    {
+      'date' => @date,
+      'book' => @book.to_hash,
+      'person' => @person.to_hash
+    }
   end
-
 end

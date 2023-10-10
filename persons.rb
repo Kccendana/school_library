@@ -1,11 +1,29 @@
 require_relative 'student'
 require_relative 'teacher'
 require_relative 'action_interface'
+require_relative 'persons_module'
 
 class Persons < ActionInterface
-  def initialize(people)
-    @people = people
+  include PersonsModule
+  def initialize()
+    @people = read_books_from_json_file
     super()
+  end
+
+  def read_books_from_json_file()
+    file_path = 'persons.json'
+    persons = []
+    begin
+      json_data = File.read(file_path)
+      person_hashes = JSON.parse(json_data)
+      person_hashes.each do |hash|
+        person = get_person(hash)
+        persons << person
+      end
+    rescue StandardError => e
+      puts "An error occurred: #{e.message}"
+    end
+    persons
   end
 
   def list_all
@@ -37,7 +55,7 @@ class Persons < ActionInterface
     end
   end
 
-  def save 
+  def save
     persons_hashes = @people.map(&:to_hash)
     persons_json = JSON.pretty_generate(persons_hashes)
     File.write('persons.json', persons_json)

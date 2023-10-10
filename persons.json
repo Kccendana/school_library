@@ -1,0 +1,26 @@
+[
+  {
+    "class": "Student",
+    "classroom": "7",
+    "age": 23,
+    "name": "Chudisoft",
+    "parent_permission": true,
+    "id": 438
+  },
+  {
+    "class": "Teacher",
+    "specialization": "Maths",
+    "age": 43,
+    "name": "Teacher1",
+    "parent_permission": true,
+    "id": 746
+  },
+  {
+    "class": "Teacher",
+    "specialization": "Maths",
+    "age": 54,
+    "name": "Teacher2",
+    "parent_permission": true,
+    "id": 307
+  }
+]

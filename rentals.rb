@@ -2,11 +2,12 @@ require_relative 'book'
 require_relative 'person'
 require_relative 'rental'
 require_relative 'action_interface'
+require_relative 'persons_module'
 
 class Rentals < ActionInterface
+  include PersonsModule
   def initialize()
     @rentals = read_rentals_from_json_file
-    end
     super()
   end
 
@@ -23,14 +24,16 @@ class Rentals < ActionInterface
 
       # Create Book objects from each hash and add them to the array
       rental_hashes.each do |hash|
-        rental = Rental.new(hash['title'], hash['author'])
+        book = Book.new(hash['book']['title'], hash['book']['author'])
+        person = get_person(hash['person'])
+        rental = Rental.new(hash['date'], book, person)
         rentals << rental
       end
     rescue StandardError => e
       puts "An error occurred: #{e.message}"
     end
 
-    books
+    rentals
   end
 
   def create(books, people)
@@ -49,12 +52,18 @@ class Rentals < ActionInterface
       if person_to_rent
         rental = Rental.new(date, books[book_number], person_to_rent)
         @rentals << rental
-        rental.save_rental_to_file(date, books[book_number], person_to_rent)
+        save
         puts 'Book rented successfully.'
       else
         "Person with ID #{person_id} not found."
       end
     end
+  end
+
+  def save
+    rentals_hashes = @rentals.map(&:to_hash)
+    rentals_json = JSON.pretty_generate(rentals_hashes)
+    File.write('rentals.json', rentals_json)
   end
 
   def list_all
