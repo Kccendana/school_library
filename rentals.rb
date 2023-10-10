@@ -4,7 +4,7 @@ require_relative 'rental'
 require_relative 'action_interface'
 
 class Rentals < ActionInterface
-  def initialize(rentals)
+  def initialize()
     @rentals = rentals
     super()
   end
