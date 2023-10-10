@@ -30,6 +30,7 @@ class Books < ActionInterface
     else
       book = Book.new(title, author)
       @books << book
+      book.save_book_to_file(title, author)
       puts 'Book created successfully.'
     end
   end

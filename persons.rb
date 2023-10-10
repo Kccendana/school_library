@@ -53,6 +53,7 @@ class Persons < ActionInterface
     else
       student = Student.new(grade, age, name: name, parent_permission: parent_permission)
       @people << student
+      student.save_student_to_file(grade, age, name, parent_permission)
       puts "Student created successfully. ID is #{student.id}"
     end
   end
@@ -62,6 +63,7 @@ class Persons < ActionInterface
     specialization = gets.chomp
     teacher = Teacher.new(age, specialization, name: name)
     @people << teacher
+    teacher.save_teacher_to_file(age, specialization, name)
     puts "Teacher created successfully. ID is #{teacher.id}"
   end
 

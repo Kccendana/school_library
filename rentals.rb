@@ -28,6 +28,7 @@ class Rentals < ActionInterface
       if person_to_rent
         rental = Rental.new(date, books[book_number], person_to_rent)
         @rentals << rental
+        rental.save_rental_to_file(date, books[book_number], person_to_rent)
         puts 'Book rented successfully.'
       else
         "Person with ID #{person_id} not found."
