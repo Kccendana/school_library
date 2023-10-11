@@ -1,11 +1,41 @@
 require_relative 'book'
 require_relative 'person'
 require_relative 'action_interface'
+require 'json'
 
 class Books < ActionInterface
-  def initialize(books)
-    @books = books
+  def initialize()
+    @books = read_books_from_json_file
     super()
+  end
+
+  def read_books_from_json_file()
+    file_path = 'books.json'
+    books = []
+
+    begin
+      # Read the JSON file
+      json_data = File.read(file_path)
+
+      # Parse the JSON data into an array of hashes
+      book_hashes = JSON.parse(json_data)
+
+      # Create Book objects from each hash and add them to the array
+      book_hashes.each do |hash|
+        book = Book.new(hash['title'], hash['author'])
+        books << book
+      end
+    rescue StandardError => e
+      puts "An error occurred: #{e.message}"
+    end
+
+    books
+  end
+
+  def save
+    books_hashes = @books.map(&:to_hash)
+    books_json = JSON.pretty_generate(books_hashes)
+    File.write('books.json', books_json)
   end
 
   def list_all
@@ -30,11 +60,16 @@ class Books < ActionInterface
     else
       book = Book.new(title, author)
       @books << book
+      save
       puts 'Book created successfully.'
     end
   end
 
-  def find(&block)
-    @books.find(&block)
+  def find(index)
+    @books[index]
+  end
+
+  def empty
+    @books.empty?
   end
 end

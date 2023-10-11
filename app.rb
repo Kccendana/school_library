@@ -14,9 +14,9 @@ class App
   }.freeze
 
   def initialize
-    @books = Books.new([])
-    @rentals = Rentals.new([])
-    @people = Persons.new([])
+    @books = Books.new
+    @rentals = Rentals.new
+    @people = Persons.new
   end
 
   def start
