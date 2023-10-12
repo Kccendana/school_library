@@ -1,5 +1,5 @@
 # book_spec.rb
-require_relative 'book'
+require_relative '../book'
 require 'rspec'
 
 describe Book do

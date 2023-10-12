@@ -1,12 +1,12 @@
 # student_spec.rb
-require_relative 'person'
-require_relative 'classroom'
-require_relative 'student'
+require_relative '../person'
+require_relative '../classroom'
+require_relative '../student'
 require 'rspec'
 
 describe Student do
-  let(:classroom) { Classroom.new('Math') }
-  let(:student) { Student.new(classroom, 18, name: 'Alice', parent_permission: true, id: 42) }
+  classroom = Classroom.new('Math')
+  student = Student.new(classroom, 18, name: 'Alice', parent_permission: true, id: 42)
 
   context 'when creating a new student' do
     it 'should have the correct attributes' do
@@ -39,7 +39,7 @@ describe Student do
     it 'should have the correct hash structure' do
       hash = student.to_hash
 
-      expect(hash['class']).to eq('Student')
+      expect(hash['class']).to eq(Student)
       expect(hash['age']).to eq(18)
       expect(hash['name']).to eq('Alice')
       expect(hash['parent_permission']).to eq(true)
